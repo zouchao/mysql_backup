@@ -9,6 +9,7 @@ import time
 import zipfile
 import yaml
 import s3
+import pytz
 
 # 数据库用户名
 # db_user = "root"
@@ -36,7 +37,14 @@ expire_hour = 5
 
 # 获取备份文件名
 def get_backup_filename():
-    t = time.strftime(backup_suffix, time.localtime())
+        # 获取东八区时区对象
+    tz = pytz.timezone('Asia/Shanghai')
+
+    # 获取当前时间，并使用时区进行转换
+    current_time = datetime.datetime.now(tz)
+
+    # 格式化时间字符串
+    t = current_time.strftime(backup_suffix)
     return "%s_%s" % (backup_prefix, t)
 
 
