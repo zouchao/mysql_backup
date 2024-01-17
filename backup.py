@@ -10,6 +10,7 @@ import zipfile
 import yaml
 import s3
 import pytz
+import requests
 
 # 数据库用户名
 # db_user = "root"
@@ -74,9 +75,9 @@ def get_file_name(file_path):
     file_name = os.path.splitext(base_name)[0]
     return file_name
 
-def get_host_ip():
+def get_host_eth0():
     """
-    查询本机ip地址
+    查询本机ip地址 eth0
     :return: ip
     """
     try:
@@ -86,6 +87,10 @@ def get_host_ip():
     finally:
         s.close()
         return ip
+
+def get_host_ip():
+    return requests.get('http://ifconfig.me/ip', timeout=1).text.strip()
+
 
 cmd_template = "docker exec -it {container_name} mysqldump -u{db_user} -p{db_password} {database} > {file_path}"
 
