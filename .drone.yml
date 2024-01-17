@@ -28,6 +28,7 @@ steps:
       target: ~/mysql
       script:
         - cd ~/mysql
+        - pip install -r requirements.txt
         - python backup.py
 
 trigger:
