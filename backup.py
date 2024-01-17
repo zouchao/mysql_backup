@@ -49,8 +49,10 @@ def get_backup_filename():
 
 
 def get_backup_path(backup_dir):
-    return "%s%s%s%s%s" % (backup_dir, os.sep, get_host_ip(), os.sep, get_backup_filename())
+    return "%s%s%s" % (backup_dir, os.sep, get_backup_filename())
 
+def get_s3_path(name, zip_file):
+    return "%s:%s%s%s" % (get_host_ip(), name, os.sep, get_base_name(zip_file))
 
 # 获取过期时间戳
 def get_expire_time():
@@ -123,7 +125,7 @@ def backup(config):
         for database in db['databases']:
             backup_database(backup_path, database, container_name, db)
         zip_file = zip_dir(backup_path)
-        s3.upload_to_s3(zip_file, get_base_name(zip_file))
+        s3.upload_to_s3(zip_file, get_s3_path(config['name'], zip_file))
     finally:
         shutil.rmtree(backup_path)
 
