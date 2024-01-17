@@ -21,8 +21,8 @@ steps:
     settings:
       hosts:
         - from_secret: LIN_HOST_TEST
-      password:
-        from_secret: LIN_SSH_PASSWD_TEST
+      key:
+        from_secret: key
       port: 22
       command_timeout: 2m
       target: ~/mysql
