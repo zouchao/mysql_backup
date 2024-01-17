@@ -20,7 +20,7 @@ steps:
         - master
     settings:
       hosts:
-        - from_secret: LIN_HOST_TEST
+        - 139.162.20.83
       key:
         from_secret: key
       port: 22
