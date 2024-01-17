@@ -149,12 +149,15 @@ def parse_yaml():
     ystr = f.read()
     y = yaml.load(ystr, Loader=yaml.FullLoader)
     host_config = next((item for item in y['hosts'] if item.get('ip') == get_host_ip()), None)
+    print(y)
     if host_config:
         host_config['storage_config'] = y['storage'][host_config['storage']]
     return host_config
 
 if __name__ == "__main__":
     config = parse_yaml()
+    print(config)
+    print(get_host_ip())
     if config['storage'] == "s3":
         storage_config = config['storage_config']
         s3.ACCESS_KEY = storage_config['access_id']
