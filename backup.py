@@ -89,7 +89,8 @@ def get_host_eth0():
         return ip
 
 def get_host_ip():
-    return requests.get('http://ifconfig.me/ip', timeout=1).text.strip()
+    # return requests.get('http://ifconfig.me/ip', timeout=1).text.strip()
+    return requests.get('https://checkip.amazonaws.com', timeout=5).text.strip()
 
 
 cmd_template = "docker exec -it {container_name} mysqldump -u{db_user} -p{db_password} {database} > {file_path}"
