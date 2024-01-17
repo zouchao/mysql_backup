@@ -1,0 +1,15 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+.DS_Store
+.vim/
+config.yml
+*.zip
+*.sql
+__pycache__
