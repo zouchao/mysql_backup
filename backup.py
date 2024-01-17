@@ -41,7 +41,7 @@ def get_backup_filename():
 
 
 def get_backup_path(backup_dir):
-    return "%s%s%s" % (backup_dir, os.sep, get_backup_filename())
+    return "%s%s%s%s%s" % (backup_dir, os.sep, get_host_ip(), os.sep, get_backup_filename())
 
 
 # 获取过期时间戳
