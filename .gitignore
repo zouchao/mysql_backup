@@ -13,3 +13,4 @@ config.yml
 *.zip
 *.sql
 __pycache__
+venv

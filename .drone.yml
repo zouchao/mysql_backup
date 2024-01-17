@@ -9,7 +9,7 @@ steps:
       CONFIG_FILE:
         from_secret: config_file
     commands:
-      - printf '%s\n' $CONFIG_FILE > ./config.yml
+      - echo -e "$CONFIG_FILE" > ./config.yml
 
   - name: deploy
     image: drillster/drone-rsync
