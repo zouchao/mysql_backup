@@ -69,7 +69,6 @@ def get_host_ip():
     查询本机ip地址
     :return: ip
     """
-    return "139.162.20.83"
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(('8.8.8.8', 80))
