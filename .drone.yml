@@ -1,0 +1,39 @@
+kind: pipeline
+type: docker
+name: mysql_backup
+
+steps:
+  - name: config
+    image: plugins/docker
+    environment:
+      CONFIG_FILE:
+        from_secret: config_file
+    commands:
+      - printf '%s\n' $CONFIG_FILE > ./config.yml
+      - pwd
+
+  - name: deploy
+    image: drillster/drone-rsync
+    depends_on:
+      - config
+    when:
+      branch:
+        - master
+    settings:
+      host:
+        from_secret: LIN_HOST_TEST
+      username:
+        from_secret: SSH_USER_TEST
+      password:
+        from_secret: LIN_SSH_PASSWD_TEST
+      port: 22
+      command_timeout: 2m
+      source: ./target
+      target: ~/mysql
+      script:
+        - cd ~/mysql
+        - python backup.py
+
+trigger:
+  branch:
+    - master
