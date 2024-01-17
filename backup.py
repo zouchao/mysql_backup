@@ -53,7 +53,7 @@ def get_backup_path(backup_dir):
     return "%s%s%s" % (backup_dir, os.sep, get_backup_filename())
 
 def get_s3_path(name, zip_file):
-    return "%s:%s%s%s" % (get_host_ip(), name, os.sep, get_base_name(zip_file))
+    return "%s:%s%s%s" % (name, get_host_ip(), os.sep, get_base_name(zip_file))
 
 # 获取过期时间戳
 def get_expire_time():
@@ -93,7 +93,7 @@ def get_host_ip():
     return requests.get('https://checkip.amazonaws.com', timeout=5).text.strip()
 
 
-cmd_template = "docker exec -it {container_name} mysqldump -u{db_user} -p{db_password} {database} > {file_path}"
+cmd_template = "docker exec -it {container_name} mysqldump -u{db_user} -p\"{db_password}\" {database} > {file_path}"
 
 # 备份指定数据库
 def backup_database(backup_path, database, container_name, db):
@@ -106,6 +106,7 @@ def backup_database(backup_path, database, container_name, db):
         "file_path": file_path,
     }
     cmd = cmd_template.format(**d)
+    print(cmd)
     subprocess.call(cmd, shell=True)
 
 
@@ -155,15 +156,12 @@ def parse_yaml():
     ystr = f.read()
     y = yaml.load(ystr, Loader=yaml.FullLoader)
     host_config = next((item for item in y['hosts'] if item.get('ip') == get_host_ip()), None)
-    print(y)
     if host_config:
         host_config['storage_config'] = y['storage'][host_config['storage']]
     return host_config
 
 if __name__ == "__main__":
     config = parse_yaml()
-    print(config)
-    print(get_host_ip())
     if config['storage'] == "s3":
         storage_config = config['storage_config']
         s3.ACCESS_KEY = storage_config['access_id']
