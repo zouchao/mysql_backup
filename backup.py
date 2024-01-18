@@ -90,8 +90,8 @@ def backup_database(backup_path, database, container_name, db):
     }
     cmd = cmd_template.format(**d)
     print(cmd)
-    os.system(cmd)
-    #subprocess.call(cmd, shell=True)
+    #os.system(cmd)
+    subprocess.run(cmd, shell=True, capture_output=True, check=True)
 
 
 def zip_dir(dir_path):
