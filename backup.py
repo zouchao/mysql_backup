@@ -12,26 +12,9 @@ import s3
 import pytz
 import requests
 
-# 数据库用户名
-# db_user = "root"
-# 数据库密码
-#db_password = "2023@100BadIdeas"
-# 备份目录
-# backup_dir = "/root/mysql/backup"
 # backup_prefix和backup_suffix分别为备份文件的前缀和后缀，如test_backup_2019-09-19-11则代表该文件是在2019年9月19日的11点时备份的
 backup_prefix = "backup"
 backup_suffix = "%Y%m%d-%H"
-# 备份数据库列表
-# backup_databases = [
-#     "becoming",
-#     "alicecam",
-#     "drone_ci",
-#     "kegel",
-#     "stresswatch",
-#     "stretch_java",
-# ]
-# 容器名
-# container_name = "mysqldb"
 # 过期小时，定期删除5个小时前的备份文件
 expire_hour = 5
 
@@ -107,7 +90,8 @@ def backup_database(backup_path, database, container_name, db):
     }
     cmd = cmd_template.format(**d)
     print(cmd)
-    subprocess.call(cmd, shell=True)
+    os.system(cmd)
+    #subprocess.call(cmd, shell=True)
 
 
 def zip_dir(dir_path):
