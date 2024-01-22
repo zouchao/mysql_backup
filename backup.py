@@ -89,16 +89,7 @@ def backup_database(backup_path, database, container_name, db):
         "file_path": file_path,
     }
     cmd = cmd_template.format(**d)
-    print(cmd)
-    #os.system(cmd)
-    try:
-        result=subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
-        print("Command output:", result.stdout)
-    except subprocess.CalledProcessError as e:
-        print(f"error: {e}")
-        print(f"Command failed with return code {e.returncode}")
-        print(f"Output:\n{e.output}")
-        print("Error output:", e.stderr)
+    subprocess.run(cmd, shell=True, check=True)
 
 
 
