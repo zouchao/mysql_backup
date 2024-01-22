@@ -76,7 +76,7 @@ def get_host_ip():
     return requests.get('https://checkip.amazonaws.com', timeout=5).text.strip()
 
 
-cmd_template = "docker exec -it {container_name} mysqldump -u{db_user} -p\"{db_password}\" {database} > {file_path}"
+cmd_template = "docker exec {container_name} mysqldump -u{db_user} -p\"{db_password}\" {database} > {file_path}"
 
 # 备份指定数据库
 def backup_database(backup_path, database, container_name, db):
@@ -92,10 +92,14 @@ def backup_database(backup_path, database, container_name, db):
     print(cmd)
     #os.system(cmd)
     try:
-        subprocess.run(cmd, shell=True, capture_output=True, check=True)
+        result=subprocess.run(cmd, shell=True, check=True, capture_output=True, text=True)
+        print("Command output:", result.stdout)
     except subprocess.CalledProcessError as e:
+        print(f"error: {e}")
         print(f"Command failed with return code {e.returncode}")
-        print(f"Output:\n{e.output.decode()}")
+        print(f"Output:\n{e.output}")
+        print("Error output:", e.stderr)
+
 
 
 def zip_dir(dir_path):
