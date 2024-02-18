@@ -118,7 +118,7 @@ def backup(config):
         s3.upload_to_s3(zip_file, get_s3_path(config['name'], zip_file))
     finally:
         print(backup_path)
-        #shutil.rmtree(backup_path)
+        shutil.rmtree(backup_path)
 
 
 # 清理过期备份文件
